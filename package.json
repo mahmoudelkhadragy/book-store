@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ch1": "node --env-file=.env src/ch01-hello.js"
+    "ch1": "node --env-file=.env --env-file=atlas-credentials.env src/ch01-hello.js"
   },
   "keywords": [],
   "author": "",
