@@ -1,0 +1,23 @@
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: bookstore-mongo
+    # --replSet turns this single mongod into a 1-member replica set.
+    # Transactions (chapter 10) only work on a replica set, so we pay that cost once, now.
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      # First run: rs.status() throws (no replica set yet) -> rs.initiate() creates it.
+      # Later runs: rs.status() succeeds and nothing happens. Idempotent by design.
+      test: >
+        mongosh --quiet --eval "try { rs.status().ok } catch (e) {
+          rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27017' }] }).ok }"
+      interval: 5s
+      timeout: 10s
+      retries: 30
+
+volumes:
+  mongo-data:
