@@ -24,7 +24,7 @@ on `bookstore`. Atlas is a 3-node replica set, so transactions (ch10) work out o
 |---|---|---|---|---|
 | 1 | Hello Mongo: first documents | documents, collections, `_id`/ObjectId | ~15m | done |
 | 2 | Schemas & models: the Book model, CRUD | schema-on-write in a schemaless DB | ~20m | built — your turn pending |
-| 3 | Validation & errors + an Express API | validators vs unique index, E11000 | ~20m | |
+| 3 | Validation & errors + an Express API | validators vs unique index, E11000 | ~20m | built — your turn pending |
 | 4 | Querying: filters, projection, sort, pagination, `lean()` | skip/limit cost vs cursor paging | ~20m | |
 | 5 | Relationships: authors, reviews — embed or reference? | data locality, `populate`, N+1 | ~25m | |
 | 6 | Break it: two buyers, one book → oversell | document-level atomicity, `$inc` | ~20m | |

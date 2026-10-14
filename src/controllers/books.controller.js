@@ -1,13 +1,11 @@
 import { Book } from '../models/book.js';
 
 export const createBook = async (req, res) => {
-	const { title, price, pages, tags, author } = req.body ?? {};
+	// Pick fields by name (not Book.create(req.body)) so clients can't set inStock, createdAt...
+	// No "is title present?" check here any more: the schema owns that rule.
+	const { title, price, pages, isbn, tags, author } = req.body ?? {};
 
-	if (!title || !author) {
-		return res.status(400).json({ error: 'Title and author are required' });
-	}
-
-	const newBook = await Book.create({ title, price, pages, tags, author });
+	const newBook = await Book.create({ title, price, pages, isbn, tags, author });
 
 	return res.status(201).json(newBook);
 };

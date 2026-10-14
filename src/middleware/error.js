@@ -12,6 +12,13 @@ export function errorHandler(err, req, res, next) {
 		return res.status(400).json({ error: 'Validation failed', details });
 	}
 
+	// Unique index violated (e.g. a second book with the same isbn).
+	// This is a raw MongoDB error (code 11000), not a Mongoose validation error.
+	if (err.code === 11000) {
+		const field = Object.keys(err.keyPattern ?? {})[0] ?? 'field';
+		return res.status(409).json({ error: `A book with this ${field} already exists` });
+	}
+
 	console.error(err); // unexpected: log it, but don't leak internals to the client
 	return res.status(500).json({ error: 'Internal server error' });
 }
